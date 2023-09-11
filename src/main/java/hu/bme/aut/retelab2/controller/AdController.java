@@ -28,7 +28,7 @@ public class AdController {
     }
 
     @GetMapping
-    public List<Ad> getByPrice(@RequestParam Double min, @RequestParam Double max) {
+    public List<Ad> getByPrice(@RequestParam(value = "min", defaultValue = "0") Double min, @RequestParam(value = "max", defaultValue = "10000000") Double max) {
         List<Ad> adList = adRepository.findByPrice(min, max);
         for (Ad ad:
              adList) {
