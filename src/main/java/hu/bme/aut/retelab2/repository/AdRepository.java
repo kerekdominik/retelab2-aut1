@@ -2,11 +2,13 @@ package hu.bme.aut.retelab2.repository;
 
 import hu.bme.aut.retelab2.domain.Ad;
 import hu.bme.aut.retelab2.domain.Note;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
 
@@ -54,5 +56,18 @@ public class AdRepository {
 
     public List<Ad> findByTag(String tag) {
         return em.createQuery("SELECT ad FROM Ad ad WHERE ?1 MEMBER OF ad.tags", Ad.class).setParameter(1, tag).getResultList();
+    }
+
+    @Transactional
+    @Scheduled(fixedDelay= 6000)
+    public void autoDelete() {
+        List<Ad> expiredAds = em.createQuery(
+                "SELECT ad FROM Ad ad WHERE ad.expireTime < ?1",
+                Ad.class).setParameter(1, LocalDateTime.now()).getResultList();
+
+        for (Ad ad:
+             expiredAds) {
+            em.remove(ad);
+        }
     }
 }

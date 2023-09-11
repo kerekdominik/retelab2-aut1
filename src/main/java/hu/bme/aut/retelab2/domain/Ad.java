@@ -21,16 +21,25 @@ public class Ad {
 
     private Double price;
 
-    private Date createdAt;
+    private Date lastUpdated;
 
     private String key;
 
     @ElementCollection
     private Set<String> tags;
 
-    //private LocalDateTime expireTime;
+    private LocalDateTime expireTime;
+
 
     //Getters & Setters
+    public LocalDateTime getExpireTime() {
+        return expireTime;
+    }
+
+    public void setExpireTime(LocalDateTime expireTime) {
+        this.expireTime = expireTime;
+    }
+
     public Set<String> getTags() {
         return tags;
     }
@@ -79,11 +88,11 @@ public class Ad {
         this.price = price;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
+    public Date getLastUpdated() {
+        return lastUpdated;
     }
 
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
+    public void lastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
     }
 }

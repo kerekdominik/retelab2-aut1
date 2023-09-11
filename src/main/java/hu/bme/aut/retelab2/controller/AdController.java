@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +22,8 @@ public class AdController {
     @PostMapping
     public String create(@RequestBody Ad ad) {
         ad.setId(null);
-        ad.setCreatedAt(Date.from(Instant.now()));
+        ad.lastUpdated(Date.from(Instant.now()));
+        ad.setExpireTime(LocalDateTime.now());
         return adRepository.save(ad);
     }
 
@@ -37,7 +39,7 @@ public class AdController {
 
     @PutMapping
     public ResponseEntity<String> update(@RequestBody Ad ad) {
-        ad.setCreatedAt(Date.from(Instant.now()));
+        ad.lastUpdated(Date.from(Instant.now()));
         Ad edited = adRepository.editWithKey(ad);
         if (edited != null) {
             return ResponseEntity.ok("Updated successfully!");
@@ -49,4 +51,5 @@ public class AdController {
     public List<Ad> getByTag(@PathVariable String tag) {
         return adRepository.findByTag(tag);
     }
+
 }
