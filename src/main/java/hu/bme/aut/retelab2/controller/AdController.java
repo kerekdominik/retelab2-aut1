@@ -44,4 +44,9 @@ public class AdController {
         }
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid secret key!!!");
     }
+
+    @GetMapping("/{tag}")
+    public List<Ad> getByTag(@PathVariable String tag) {
+        return adRepository.findByTag(tag);
+    }
 }

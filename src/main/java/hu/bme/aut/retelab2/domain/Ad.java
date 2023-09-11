@@ -1,9 +1,12 @@
 package hu.bme.aut.retelab2.domain;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 public class Ad {
@@ -21,6 +24,20 @@ public class Ad {
     private Date createdAt;
 
     private String key;
+
+    @ElementCollection
+    private Set<String> tags;
+
+    //private LocalDateTime expireTime;
+
+    //Getters & Setters
+    public Set<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<String> tags) {
+        this.tags = tags;
+    }
 
     public String getKey() {
         return key;

@@ -1,6 +1,7 @@
 package hu.bme.aut.retelab2.repository;
 
 import hu.bme.aut.retelab2.domain.Ad;
+import hu.bme.aut.retelab2.domain.Note;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,5 +50,9 @@ public class AdRepository {
                 sb.append(CHARS[RND.nextInt(CHARS.length)]);
             return sb.toString();
         }
+    }
+
+    public List<Ad> findByTag(String tag) {
+        return em.createQuery("SELECT ad FROM Ad ad WHERE ?1 MEMBER OF ad.tags", Ad.class).setParameter(1, tag).getResultList();
     }
 }
